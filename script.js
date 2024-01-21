@@ -1,4 +1,3 @@
-colors = [["--primary", "--primary-variant"], ["--secondary", "--secondary-variant"], ["--tertiary", "--tertiary-variant"], ["--quaternary", "--quaternary-variant"]];
 
 activeSection = 1;
 function changeSection(direction) {
@@ -219,9 +218,6 @@ document.addEventListener("mouseup", function (event) {
 });
 
 
-
-//=========== COMPÉTENCES =============
-
 var posChar = 0;
 var textPres = [
     "Eric Mai",
@@ -304,46 +300,29 @@ document.querySelector("#cmd-input").addEventListener("keyup", (e) => {
     }
 });
 
-document.querySelectorAll("#terminal li:not(.folder, .cmd).multi-branch").forEach(element => {
-    console.log(element);
-    element.addEventListener("click", () => {
-        isWritting = document.querySelector("#cmd-input");
-        document.querySelector("#terminal li.cmd.li-input").remove();
-        selectedLangage = document.createElement("li");
-        selectedLangage.classList.add("cmd");
-        selectedLangage.value = element.querySelector("p").innerHTML;
-
-        document.querySelector("#terminal > ul").appendChild(selectedLangage);
-        console.log(element.querySelector("p"));
-        lowerCase = element.querySelector("p").innerHTML.toLowerCase();
-        showCompetence(lowerCase);
-        document.querySelector("#terminal > ul").scrollTop = document.querySelector("#terminal > ul").scrollHeight;
-    })
-});
-
 // document.getElementById('foobar').addEventListener('keyup', e => {
 //     console.log('Caret at: ', e.target.selectionStart)
 //   })
 
 
-document.querySelectorAll("#close-project, #close-layer, .open-popup").forEach(element => {
-    element.addEventListener("click", () => {
-        if (document.querySelector("#project-popup").classList.contains("hide")) {
-            document.querySelector("#popup-container").style.removeProperty('transform');
-            document.querySelector("#project-popup").classList.remove("hide");
-            document.querySelector("body").style.overflow = "hidden";
-        }
-        else {
-            document.querySelector("#popup-container").style.transform = "scale(0)";
-            setTimeout(() => {
-                document.querySelector("#project-popup").classList.add("hide");
-                document.querySelector("body").style.overflow = "auto";
-            }, 200);
-            // document.querySelector("#project-popup").classList.add("hide");
-            // document.querySelector("body").style.overflow = "auto";
-        }
-    })
-});
+// document.querySelectorAll("#close-project, #close-layer, .open-popup").forEach(element => {
+//     element.addEventListener("click", () => {
+//         if (document.querySelector("#project-popup").classList.contains("hide")) {
+//             document.querySelector("#popup-container").style.removeProperty('transform');
+//             document.querySelector("#project-popup").classList.remove("hide");
+//             document.querySelector("body").style.overflow = "hidden";
+//         }
+//         else {
+//             document.querySelector("#popup-container").style.transform = "scale(0)";
+//             setTimeout(() => {
+//                 document.querySelector("#project-popup").classList.add("hide");
+//                 document.querySelector("body").style.overflow = "auto";
+//             }, 200);
+//             // document.querySelector("#project-popup").classList.add("hide");
+//             // document.querySelector("body").style.overflow = "auto";
+//         }
+//     })
+// });
 
 competences = {
     "html": {
@@ -364,7 +343,6 @@ competences = {
         "progression": 65,
         "competence": ["Utiliser les variables", "Utiliser les boucles", "Utiliser les conditions", "Utiliser les fonctions", "Utiliser les objets", "Utiliser les tableaux", "Utiliser les méthodes de tableaux", "Utiliser les méthodes d'objets", "Utiliser les évènements", "Utiliser les récursives"]
     },
-    //sass
     "sass": {
         "title": "Sass",
         "icon": "img/icon/SASS.png",
@@ -389,7 +367,6 @@ competences = {
         "progression": 10,
         "competence": ["Utiliser les requêtes", "Utiliser les jointures"]
     },
-    // python
     "python": {
         "title": "Python",
         "icon": "img/icon/Python.png",
@@ -406,6 +383,12 @@ competences = {
     
 }
 
+let alias = {
+    "js": competences["javascript"],
+    "py": competences["python"],
+    "wp": competences["wordpress"],
+};
+
 
 function showCompetence(langage) {
     compLine = document.createElement("li");
@@ -414,10 +397,7 @@ function showCompetence(langage) {
     newCmdInput.classList.add("cmd");
     newCmdInput.innerHTML = '<input type="text" name="" id="cmd-input" autocomplete="off"><span id="cmd-text"></span><span id="cmd-caret">_</span>';
 
-    if (competences[langage] == undefined) {
-        compLine.innerHTML = "Comande inconnue. Veuillez réessayer avec un des langages cités plus haut.";
-    }
-    else {
+    if (competences[langage] != undefined) {
         progressLine = document.createElement("li");
         progressLine.classList.add("progress-li");
         progressLine.innerHTML = `Maîtrise : <div class='progress-container'><div style='transform: translateX(-${parseInt(100 - competences[langage].progression)}%)'></div></div>${competences[langage].progression}%`;
@@ -436,14 +416,46 @@ function showCompetence(langage) {
 
         document.querySelector("#terminal > ul").appendChild(progressLine);
     }
+    else if (alias[langage] != undefined) {
+        progressLine = document.createElement("li");
+        progressLine.classList.add("progress-li");
+        progressLine.innerHTML = `Maîtrise : <div class='progress-container'><div style='transform: translateX(-${parseInt(100 - alias[langage].progression)}%)'></div></div>${alias[langage].progression}%`;
+        compLine.classList.add("competence-info");
+        textComp = "";
+        alias[langage].competence.forEach(comp => {
+            textComp += `<li>- ${comp}</li>`;
+        });
+
+        if (langage == "sql") {
+            compLine.innerHTML = `<ul style='gap:10px;'>${textComp}</ul><div><img src='${alias[langage].icon}' alt='icon HTML' loading='lazy' style='object-fit:contain; height:100px;'></img></div>`;
+        }
+        else {
+            compLine.innerHTML = `<ul style='gap:10px;'>${textComp}</ul><div><img src='${alias[langage].icon}' alt='icon HTML' loading='lazy'></img></div>`;
+        }
+
+        document.querySelector("#terminal > ul").appendChild(progressLine);
+    }
+    else {
+        compLine.innerHTML = "Comande inconnue. Veuillez réessayer avec un des langages cités plus haut.";
+    }
     document.querySelector("#terminal > ul").appendChild(compLine);
 
     document.querySelector("#terminal > ul").appendChild(newCmdInput);
-    console.log(document.querySelector("#cmd-input"));
+    document.querySelector("#cmd-input").focus();
     addEventListeners();
 
 }
 
+document.querySelectorAll("#terminal li:not(.folder, .cmd).multi-branch").forEach(element => {
+    element.addEventListener("click", () => {    
+        document.querySelector("#terminal > ul > li:last-child").innerHTML = element.querySelector("p").innerHTML;
+        showCompetence(element.querySelector("p").innerHTML.toLowerCase());
+        document.querySelector("#terminal > ul").scrollTop = document.querySelector("#terminal > ul").scrollHeight;
+    })
+});
+
+
+// associer l'input au span
 function addEventListeners() {
     document.querySelector("#cmd-input").addEventListener("input", () => {
         document.querySelector("#cmd-text").textContent = document.querySelector("#cmd-input").value;

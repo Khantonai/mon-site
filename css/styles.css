@@ -489,7 +489,7 @@ header #contact-card-button:hover {
 }
 #competences #terminal {
   width: 80%;
-  height: 800px;
+  height: 750px;
   color: #FFFFFF;
   background-color: #04183B;
   display: flex;
@@ -501,6 +501,23 @@ header #contact-card-button:hover {
 #competences #terminal > ul {
   overflow-y: scroll;
   height: 100%;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+#competences #terminal > ul::-webkit-scrollbar {
+  width: 20px;
+}
+#competences #terminal > ul::-webkit-scrollbar-track {
+  background: #04183B;
+}
+#competences #terminal > ul::-webkit-scrollbar-thumb {
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 2px #04183B;
+}
+#competences #terminal > ul::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 #competences #terminal ul {
   padding: 0px;
@@ -554,6 +571,9 @@ header #contact-card-button:hover {
   content: "└";
   margin-inline: 60px 5px;
 }
+#competences #terminal ul li.competence-info {
+  align-items: flex-start;
+}
 #competences #terminal ul li .icon {
   margin-left: 5px;
   width: 32px;
@@ -563,6 +583,7 @@ header #contact-card-button:hover {
 }
 #competences #terminal ul li.progress-li {
   display: flex;
+  margin-block: 10px;
 }
 #competences #terminal ul li .progress-container {
   width: 300px;
