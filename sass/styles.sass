@@ -533,7 +533,9 @@ header
 
 
 #portfolio
-    height: max(fit-content,100vh)
+    // height: max(fit-content,100vh)
+    min-height: 100vh
+    padding-bottom: 30vh
 
     #project-popup
         width: 100vw
@@ -800,6 +802,68 @@ header
 
     //         &.active
     //             display: block
+
+
+#formation
+    height: 120vh
+    // border: solid red
+    contain: paint
+    // background-color: orange
+    // padding-top: 5vh
+
+    .timeline-trigger
+        width: 100%
+        height: 80%
+        // background-color: yellow
+        position: absolute
+    
+    .scroll-move
+        margin-inline: 50% 
+        width: 100%
+        top: 50%
+        position: sticky
+
+        #timeline
+            // width: 100%
+            background-color: blue
+            height: 10px
+            z-index: 1
+            transform: translateY(-30px)
+            // border: solid green
+            
+        ul
+            margin: 0
+            width: 100%
+            padding: 0
+            z-index: 3
+            display: flex
+            justify-content: space-between
+            // border: solid green
+            // transform: translateY(calc(-50% - 5px))
+
+            .point:first-child
+                transform: translateX(-50%)
+            
+            .point:last-child
+                transform: translateX(50%)
+
+            .point
+                background-color: red
+                width: 50px
+                height: 50px
+                border-radius: 50px
+                top: 0
+                left: 0
+                // transform: translate(-50%, -50%)
+                z-index: 3
+                position: relative
+
+                &.passed
+                    background-color: green
+
+
+#experiences
+    height: 100vh
 
 @media screen and (max-width: 767px)
     header
